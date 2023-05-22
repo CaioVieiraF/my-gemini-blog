@@ -1,0 +1,5 @@
+# Golog
+
+My gemini/online log
+
+Hello world, this is my log on the internet about whatever comes in my mind.
