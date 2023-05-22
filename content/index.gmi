@@ -1,5 +1,18 @@
+ _______  _______  ___      _______  _______ 
+|       ||       ||   |    |       ||       |
+|    ___||   _   ||   |    |   _   ||    ___|
+|   | __ |  | |  ||   |    |  | |  ||   | __ 
+|   ||  ||  |_|  ||   |___ |  |_|  ||   ||  |
+|   |_| ||       ||       ||       ||   |_| |
+|_______||_______||_______||_______||_______|
+
 # Golog
+> My gemini/online log
 
-My gemini/online log
+Hello world, this is my log on the internet.
+Here you will find posts about development,
+computer networking, some random story telling,
+game development and other tech stuff.
 
-Hello world, this is my log on the internet about whatever comes in my mind.
+## Posts
+=> /page_001.gmi Start
