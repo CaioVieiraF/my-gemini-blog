@@ -3,7 +3,7 @@
 Olá mundo, aqui vou explicar o que é o projeto gemini(para quem não está lendo por ele) e como eu subi do zero um servidor gemini em apenas *uma hora*.
 O objetivo aqui é mostrar uma outra solução que a comunidade FOSS encontrou para criar um pedaço de internet mais massa. Essa publicação está disponível na minha cápsula gemini e no tabnews(web http).
 
-=> https://www.tabnews.com.br/ TabNews
+=> https://www.tabnews.com.br/caio/conheca-o-projeto-gemini-um-protocolo-pensado-em-criar-uma-internet-mais-massa TabNews
 => gemini://golog.net.br/ Golog, minha cápsula gemini
 
 ## Conheçendo o projeto
@@ -103,7 +103,7 @@ Com isso o servidor já está 98% pronto! falta a gente configurar o domínio da
 
 Aqui é bem simples e vou ser breve, pois o Filipe já fez um vídeo incrível explicando como fazer isso, porém na vercel. No geral é igual em qualquer plataforma de hospedagem então o vídeo é válido, até porque eu usei ele de referência para fazer na linode.
 
-=> https://yewtu.be/watch?v=IyRUn0GocEc vídeo do Filipe Deschamps
+=> https://yewtu.be/watch?v=IyRUn0GocEc Vídeo do Filipe Deschamps
 
 Tive que comprar o domínio golog.net.br, esperar ele ser propagado por uma certa parte do mundo e então fiz a configuração do dns utilizando o dns da linode para que o registro.br possa apontar o domínio para o meu servidor. A única coisa diferente que fiz é que no caso da linode precisamos criar um domínio que aponte para o servidor que criamos, que é simples e intuitivo acessando a página de "Domínios" na plataforma.
 
