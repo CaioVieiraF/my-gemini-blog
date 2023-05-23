@@ -1,1 +1,124 @@
-# Post
+# O começo
+
+Olá mundo, aqui vou explicar o que é o projeto gemini(para quem não está lendo por ele) e como eu subi do zero um servidor gemini em apenas *uma hora*.
+O objetivo aqui é mostrar uma outra solução que a comunidade FOSS encontrou para criar um pedaço de internet mais massa. Essa publicação está disponível na minha cápsula gemini e no tabnews(web http).
+
+=> https://www.tabnews.com.br/ TabNews
+=> gemini://golog.net.br/ Golog, minha cápsula gemini
+
+## Conheçendo o projeto
+
+### Sobre criar uma internet melhor
+
+O TabNews foi criado pensando em criar um pedaço mais massa de internet, tirando toda a chatice desnecessária que a maioria dos sites hoje tem de pedir cookies, assinar newsletter, anúncios e outros pop-ups. Estamos em um site pelo conteúdo e essas coisas incomodam bastante.
+
+Mas o TabNews a maioria já conhece, porém também já pensaram nisso e por isso criaram o protocolo gemini. Lançado em 2019, e inspirado no gopher, o protocolo gemini é uma solução um pouco mais extrema para esses problemas, pois a ideia é ser uma alternativa ao HTTP em que o conteúdo apresentado é praticamente texto puro e sem JavaScript ou CSS! A única estilização que dá de fazer é uma espécie de markdown mais simples que criaram só para as páginas da rede.
+
+### Como podemos usar isso?
+
+Eu sei que de primeira parece ridículo essa ideia, como que podemos usar a internet sem toda a evolução que o JS trouxe para nossas vidas? e isso faz mais sentido do que parece. No próprio tabnews a proposta é justamente focar no conteúdo e minimizar o uso de JS no lado do cliente então quem está lendo no TN já tem boa parte dessa experiência. Basta experimentar um cliente do tabnews para terminal que isso fica mais claro, geralmente o que interessa é o conteúdo e nem sempre vamos tomar tempo para colaborar com a plataforma comentando, postando ou trocando tabcoins. Pelo menos enquanto o sistema de anúncios dos usuários não é implementado, o que interessa aqui é o texto.
+
+=> https://www.tabnews.com.br/cetorres/pitch-yet-another-tabnews-cli-este-estou-fazendo-em-go Uma versão CLI do tabnews
+
+Mas ainda sim, o gemini não é 100% texto, os criadores fizeram um formato chamado de "gemtext" que é parecido com markdown e permite certas estilizações simples no texto. Para imagens alguns clientes tem uma prévisualização, mas para vídeos você terá que realmente reproduzir utilizando uma aplicação separada. A ideia é que cada aplicação tem sua responsabilidade, logo seu navegador de internet não deveria ser um reprodutor de vídeo, um editor de texto e um cliente de e-mail ao mesmo tempo. Faz mais sentido deixar essas funções em aplicações separadas para que cada uma possa se preoculpar com suas responsabilidades e possibilidades.
+
+Isso é um tema que ainda gera um pouco de discusão na comunidade, mas é impossível negar que essa proposta faz sentido já que a ideia é fugir das "desvantagens" do JS. De qualquer forma essa é a proposta do projeto e alguns clientes tentam facilitar como mencionei antes.
+
+### Estou curioso(a), como posso testar isso?
+
+Existem vários clientes disponíveis e até vários guias de como implementar um cliente com poucas linhas de código, vou deixar aqui o link de um cliente gráfico e outro CLI para vocês experimentarem. Lembrando que a experiência "completa" seria com a versão cli já que foca mais na questão do texto, mas não tem nenhum desincentivo de utilizar a versão gráfica.
+
+=> https://www.marmaladefoo.com/pages/geminaut Geminaut é um cliente gráfico pensado para windows
+=> https://ranfdev.com/projects/geopard/ Geopard é um cliente gráfico pensado para linux(muito bonito inclusive)
+=> https://github.com/makew0rld/amfora Amfora é um cliente CLI feito em go-lang
+=> https://f-droid.org/pt_BR/packages/corewala.gemini.buran/ Buran é um cliente gráfico para android
+=> https://github.com/pitr/gemini-ios Elaho é um cliente gráfico para IOS
+
+Tendo o cliente basta acessar uma URL que, diferente do http, começa como gemini://
+Para testar você pode acessar a página oficial do projeto e também minha cápsula(os sites que usam o protocolo gemini são chamados de cápsulas) que você pode acessar pelo link do início ou abaixo.
+
+=> gemini://gemini.circumlunar.space/ Projeto gemini
+=> gemini://golog.net.br/ Minha cápsula
+
+Na minha cápsula é só um blog simples que posto algumas coisas que coloco no tabnews e outras coisas. Essas cápsulas revivem o que era comum na internet antigamente nos blogs pessoais.
+
+## Como fazer seu servidor/cápsula
+
+Agora vou explicar como eu subi do zero, desde a configuração do servidor até a configuração do domínio. Para quem está lendo já em um cliente gemini essa é a parte mais interessante. Lembrando que não vou mostrar o passo a passo de cada comando, apenas explicar o que fiz mas com detalhes.
+
+### Ambiente de desenvolvimento
+
+A primeira coisa que fiz foi criar um repositório git e escolher um software para servir a cápsula, que não é feito da mesma forma do HTTP usando apache ou nginx por exemplo. O software que esquelhi foi o agate, que é feito em rust e esse foi meu único critério para escolher mesmo já que minha é minha linguagem de desenvolvimento principal hoje. Uma vantagem que achei dessa opção é que é extremamente simples para abrir o servidor, basta usar apenas um comando e já está funcionando.
+
+=> https://crates.io/crates/agate Agate
+=> https://github.com/CaioVieiraF/my-gemini-blog Repositório da cápsula
+
+O repositório serviu apenas para eu poder organizar as postagens e tranferir de forma fácil os arquivos para o servidor. Não tem nada de configuração para ser feito.
+
+Após instalar o agate vamos testar localmente. Basta seguir esses passos:
+
+* Crie uma pasta chamada "content"
+* Dentro crie o arquivo index.gmi, essa é a home do site
+* Preencha com algum conteúdo usando gemtext ou só texto
+* No terminal e na pasta acima do content, não dentro, rode o comando abaixo
+> agate --hostname localhost --addr 0.0.0.0:1965
+
+Esses parâmetros do comando só precisam ser usados da primeira vez, depois você pode usar o comando "agate" sozinho mesmo.
+
+Agora abra seu cliente gemini de preferência e coloque a URL gemini://localhost para visualizar sua cápsula localmente. Se você conseguiu até aqui parabéns! Você já ganhou muito conhecimento valioso. Agora vamos subir isso em um servidor real na internet!
+
+### Configurando o servidor
+
+Uma das coisas mais legais de usar o gemini é que tira um pouco daquele receio de publicar um site e ficar sem ideia ou achar que não está bom o suficiente. Isso pode empacar um momento de estudo em que na verdade a intenção era apenas aprender a subir um site, mas como o gemini é simples no conteúdo não temos essa barreira e partimos mais diretamente para a parte técnica e ganhamos um certo conhecimento.
+
+Acima configuramos tudo necessário para ter o servidor funcionando(sim, aquilo é tudo mesmo!), agora vamos fazer exatamente isso mas em um seridor público aberto para a internet. Você pode escolher o serviço que preferir, no meu caso eu escolhi pegar um servidor na linode pois usei um cupom que o Diolinux tem de 100 dolares para usar durante 60 dias. Escolhi o famoso nanode de 1GB pois é suficiente para um servidor simples com poucos acessos e ainda usando o gemini que é um protocolo bem mais simples e leve que o http.
+
+=> https://yewtu.be/watch?v=FGS-VL6MgLo Vídeo do diolinux
+
+Para configurar o sevidor fiz de um jeito talvez meio gambiarra mas é simples e funciona bem, então foquei em fazer funcionar e talvez depois posso automatizar melhor o processo. Acessei o servidor e clonei o repositório do github, intalei o rust e agate e rodei o serviço para testar. Acessei pelo IP público e estava funcionando! No caso da linode eles disponibilizam um DNS reverso que você pode usar para já testar com um hostname naquele comando do agate.
+
+Com isso funcionando tive que criar um serviço no sistema para que eu não precise sempre acessar o servidor e rodar o comando para servir o site, a gente precisa que ele seja um serviço do sistema que inicia e reinicia sozinho e fique rodando nos bastidores do sistema.
+
+No meu caso eu estou usando o Debian GNU/Linux 11 então controlo os serviços usando o systemd, que é padrão das distribuições linux hoje em dia. Para criar o serviço basta criar um arquivo .service na pasta /etc/systemd/systems com o nome que preferir, esse será o nome do serviço.
+
+Dentro desse arquivo você deve colocar as configurações para especificar como quer rodar o serviço. No geral é parecido, vou colocar um exemplo abaixo.
+
+>[Unit]
+>Description=Server agate
+>After=network.target
+>[Service]
+>WorkingDirectory=/root/my-gemini-blog
+>ExecStart=/root/.cargo/bin/agate
+>Type=exec
+>[Install]
+>WantedBy=default.target
+
+Depois basta rodar "systemctl daemon-reload" para o sistema reconhecer esse novo serviço e então iniciar ele e habilitar para iniciar junto do sistema
+> systemctl enable agate.service
+> systemctl start agate.service
+
+Com isso o servidor já está 98% pronto! falta a gente configurar o domínio da cápsula.
+
+### Configurando o domínio(DNS)
+
+Aqui é bem simples e vou ser breve, pois o Filipe já fez um vídeo incrível explicando como fazer isso, porém na vercel. No geral é igual em qualquer plataforma de hospedagem então o vídeo é válido, até porque eu usei ele de referência para fazer na linode.
+
+=> https://yewtu.be/watch?v=IyRUn0GocEc vídeo do Filipe Deschamps
+
+Tive que comprar o domínio golog.net.br, esperar ele ser propagado por uma certa parte do mundo e então fiz a configuração do dns utilizando o dns da linode para que o registro.br possa apontar o domínio para o meu servidor. A única coisa diferente que fiz é que no caso da linode precisamos criar um domínio que aponte para o servidor que criamos, que é simples e intuitivo acessando a página de "Domínios" na plataforma.
+
+Agora basta esperar o domínio ser divulgado e configurar na linode o DNS reverso. Depois de ter o domínio configurado você deve voltar ao servidor e:
+* Parar o serviço do agate
+* Apagar a pasta .certificates do seu projeto
+* Rodar o agate manualmente, dessa vez colocando o seu domínio na opção --hostname
+* Reiniciar o serviço do agate criado anteriormente
+
+Com isso novos certificados serão gerados e seu domínio já será acessível para todos! parabéns para você que acompanhou até aqui.
+
+## Conclusão
+
+Com a mesma ideia do tabnews, o projeto gemini tem como objetivo criar um espaço melhor de se consumir na internet com uma proposta diferente, sem querer substituir a web HTTP.
+
+Para colocar uma cápsula(site) no ar é bem simples e requer pouco conhecimento técnico. Nessa publicação deixei de falar sobre a questão do SSL no gemini, que por convenção é auto-assinado, pois vejo como um assunto separado já que o objetivo hoje é apresentar o projeto.
+
+Espero que a ideia do projeto tenha ficado clara e que minha explicação do servidor possa ter te ajudado!
